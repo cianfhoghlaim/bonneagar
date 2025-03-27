@@ -1,0 +1,17 @@
+[project]
+name = "default"
+version = "0.1.0"
+
+requires-python = ">=3.9"
+readme = "README.md"
+license = { file = "LICENSE" }
+
+dependencies = [
+    "pulumi",
+    "pulumi-hcloud",
+    "pulumi-oci"
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

@@ -19,5 +19,6 @@
         "PYTHONUNBUFFERED": "True",
         "UV_LINK_MODE": "copy",
         "UV_PROJECT_ENVIRONMENT": "/home/vscode/.venv"
-    }
+    },
+    "postStartCommand": "uv sync"
 }

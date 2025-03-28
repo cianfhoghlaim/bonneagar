@@ -9,7 +9,12 @@ license = { file = "LICENSE" }
 dependencies = [
     "pulumi",
     "pulumi-hcloud",
-    "pulumi-oci"
+    "pulumi-oci",
+    "pulumi-aws",
+    "pulumi-azure",
+    "pulumi-gcp",
+    "pulumi-onepassword",
+    "marimo"
 ]
 
 [build-system]

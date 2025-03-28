@@ -1,16 +1,25 @@
 {
-    "name": "python-pulumi-uv",
-     "image": "pulumi/pulumi-python:latest",
-     "features": {
+    "name": "python-pulumi-uv-1password",
+    "image": "pulumi/pulumi-python:latest",
+    "features": {
+        "ghcr.io/itsmechlark/features/1password:1": {},
+        "ghcr.io/devcontainers-extra/features/ansible:2": {},
+        "ghcr.io/devcontainers/features/aws-cli:1": {}, 
+        "ghcr.io/devcontainers/features/azure-cli:1": {},
+        "ghcr.io/bartventer/arch-devcontainer-features/gcloud-cli:1": {},
+        "ghcr.io/skriptfabrik/devcontainer-features/hcloud-cli:1": {},
         "ghcr.io/jsburckhardt/devcontainer-features/ruff:1": {},
-        "ghcr.io/va-h/devcontainers-features/uv:1": {}
- },
+        "ghcr.io/va-h/devcontainers-features/uv:1": {},
+            },
     "customizations": {
         "vscode": {
             "extensions": [
                 "charliermarsh.ruff",
                 "kevinrose.vsc-python-indent",
-                "ms-python.python"
+                "ms-python.python",
+                "1Password.vscode-1password",   
+                "marimo-team.vscode-marimo",
+                "ansible.vscode-ansible"
             ]
         }
     },

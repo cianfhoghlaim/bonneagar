@@ -1,21 +1,30 @@
 {
-    "name": "Python Dev Environment",
-    "build": "Dockerfile",
-    "customizations": {
-        "vscode": {
-            "extensions": [
-                "charliermarsh.ruff",
-                "kevinrose.vsc-python-indent",
-                "ms-python.python",
-                "marimo-team.vscode-marimo",
-            ]
-        }
-    },
-    "containerEnv": {
+  "name": "Python (uv) + Pulumi + Dagger",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "features": {
+     "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "marimo-team.vscode-marimo",
+        "charliermarsh.ruff",
+        "pulumi.pulumi",
+        "ms-azuretools.vscode-docker",
+        "github.copilot",
+        "github.vscode-github-actions"
+      ]
+    }
+  },  
+      "containerEnv": {
         "DISPLAY": "dummy",
         "PYTHONUNBUFFERED": "True",
         "UV_LINK_MODE": "copy",
         "UV_PROJECT_ENVIRONMENT": "/home/vscode/.venv"
     },
-    "postStartCommand": "uv sync"
+    "postCreateCommand": "uv sync"
 }

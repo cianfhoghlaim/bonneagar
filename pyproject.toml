@@ -12,7 +12,7 @@ dependencies = [
     "pulumi-hcloud",
     "pulumi-oci",
     "pulumi-aws",
-    "pulumi-azure",
+    "pulumi-azure-native",
     "pulumi-gcp",
     "pulumi-onepassword",
     "marimo"

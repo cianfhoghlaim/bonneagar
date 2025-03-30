@@ -1,3 +1,4 @@
+// .devcontainer/devcontainer.json
 {
   "name": "Python (uv) + Pulumi + Dagger",
   "build": {
@@ -16,17 +17,32 @@
         "pulumi.pulumi",
         "ms-azuretools.vscode-docker",
         "github.copilot",
-        "github.vscode-github-actions",
-        "runmedev/vscode-runme",
-        "RooVetGit/Roo-Code"
-      ]
+        "github.vscode-github-actions"
+      ],
+      "settings": {
+          "python.defaultInterpreterPath": "/usr/local/bin/python",
+          "[python]": {
+              "editor.defaultFormatter": "charliermarsh.ruff",
+              "editor.formatOnSave": true,
+              "editor.codeActionsOnSave": {
+                  "source.fixAll": "explicit",
+                  "source.organizeImports": "explicit"
+              }
+          },
+          "ruff.importStrategy": "fromEnvironment",
+          "terminal.integrated.defaultProfile.linux": "bash"
+      }
     }
-  },  
-      "containerEnv": {
-        "DISPLAY": "dummy",
-        "PYTHONUNBUFFERED": "True",
-        "UV_LINK_MODE": "copy",
-        "UV_PROJECT_ENVIRONMENT": "/home/vscode/.venv"
-    },
-    "postCreateCommand": "uv sync"
+  },
+  "containerEnv": {
+    "DISPLAY": "dummy",
+    "PYTHONUNBUFFERED": "True",
+    "UV_LINK_MODE": "copy"
+    // Removed UV_PROJECT_ENVIRONMENT to avoid potential timing issues
+  },
+  // Updated postCreateCommand: Create venv first, then sync into it.
+  // Assumes pyproject.toml exists in your workspace root.
+  "postCreateCommand": "uv venv && uv sync"
+  // Alternatively, if you want to install into the *system* python:
+  // "postCreateCommand": "uv sync --system"
 }

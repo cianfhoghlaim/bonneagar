@@ -7,27 +7,24 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     ca-certificates \
     git \
-    # Add sudo, potentially needed by dev container features/scripts later
     sudo \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 # Install uv
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
-# --- FIX: Add the CORRECT path reported by the uv installer ---
+# Add uv's actual install location (from logs) to the system PATH
 ENV PATH="/root/.local/bin:${PATH}"
-# Verify uv installation using the updated PATH
+# Verify uv installation
 RUN uv --version
 
 # Install Pulumi
-# Use a standard location
-ENV PULUMI_HOME="/usr/local/pulumi"
-# Install Pulumi without modifying user profile paths directly
-# The '-s -- --no-modify-path' tells the script not to mess with .bashrc etc.
+# The installer script defaults to ~/.pulumi/bin (which is /root/.pulumi/bin here)
+# The --no-modify-path flag prevents it changing shell config files.
 RUN curl -fsSL https://get.pulumi.com | sh -s -- --no-modify-path
-# Add Pulumi's bin to the system PATH
-ENV PATH="${PULUMI_HOME}/bin:${PATH}"
-# Verify Pulumi installation
+# --- FIX: Add the ACTUAL install path reported by the installer ---
+ENV PATH="/root/.pulumi/bin:${PATH}"
+# Verify Pulumi installation using the updated PATH
 RUN pulumi version
 
 # Install Dagger CLI into a standard location

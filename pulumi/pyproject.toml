@@ -7,7 +7,6 @@ readme = "README.md"
 
 
 dependencies = [
-    "dagger-io",
     "pulumi",
     "pulumi-hcloud",
     "pulumi-oci",
@@ -15,7 +14,6 @@ dependencies = [
     # "pulumi-azure-native",
     # "pulumi-gcp",
     "pulumi-onepassword",
-    "marimo",
 ]
 
 

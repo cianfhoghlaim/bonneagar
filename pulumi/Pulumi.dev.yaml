@@ -1,0 +1,99 @@
+# <![CDATA[# Pulumi ESC Environment for Multi-Cloud Deployment with 1Password Secrets
+# # To use: pulumi env run dev -- pulumi up
+
+# environment:
+#   # Optional: Set default regions/zones if not specified in 1Password or code
+#   # aws_region: us-west-2
+#   # azure_location: WestUS
+#   # gcp_zone: us-central1-a
+#   pass
+
+# values:
+#   # --- 1Password Secret Retrieval ---
+#   onepassword:
+#     # AWS Credentials
+#     awsCreds:
+#       fn::onepassword:read:
+#         item: aws
+#         vault: dev-baile
+#     # Azure Credentials
+#     azureCreds:
+#       fn::onepassword:read:
+#         item: azure
+#         vault: dev-baile
+#     # GCP Credentials
+#     gcpCreds:
+#       fn::onepassword:read:
+#         item: gcp
+#         vault: dev-baile
+#     # Hetzner Credentials (if needed later)
+#     hetznerCreds:
+#       fn::onepassword:read:
+#         item: hetzner
+#         vault: dev-baile
+
+#   # --- Pulumi Configuration ---
+#   pulumiConfig:
+#     # AWS Configuration
+#     aws:region: ${environment.aws_region ?? "us-west-2"} # Use env default or fallback
+#     # You might need to add AMI ID here if it's specific per environment/region
+#     # aws:ami_id: ami-xxxxxxxxxxxxxxxxx
+
+#     # Azure Configuration
+#     azure-native:location: ${environment.azure_location ?? "WestUS"} # Use env default or fallback
+#     azure-native:clientId: ${onepassword.azureCreds.fields.client_id.value}
+#     azure-native:clientSecret: ${onepassword.azureCreds.fields.client_secret.value}
+#     azure-native:tenantId: ${onepassword.azureCreds.fields.tenant_id.value}
+#     azure-native:subscriptionId: ${onepassword.azureCreds.fields.subscription_id.value}
+#     # Pass the VM admin password as a secret config value to the Python program
+#     adminPassword: ${onepassword.azureCreds.fields.vm_admin_password.value}
+
+#     # GCP Configuration
+#     gcp:project: ${onepassword.gcpCreds.fields.project_id.value}
+#     gcp:zone: ${environment.gcp_zone ?? "us-central1-a"} # Use env default or fallback
+
+#     # OCI Configuration (from existing oci_instances.py - assuming these might also move to 1P/ESC)
+#     # Example: Fetching from 1Password if moved
+#     # oci:compartment_ocid: ${fn::onepassword:read: "op://dev-baile/oci/compartment_ocid"}
+#     # oci:subnet_ocid: ${fn::onepassword:read: "op://dev-baile/oci/subnet_ocid"}
+#     # oci:arm_image_ocid: ${fn::onepassword:read: "op://dev-baile/oci/arm_image_ocid"}
+#     # oci:amd_image_ocid: ${fn::onepassword:read: "op://dev-baile/oci/amd_image_ocid"}
+#     # oci:availability_domain: ${fn::onepassword:read: "op://dev-baile/oci/availability_domain"}
+#     # onepassword_vault: dev-baile # Keep if oci_instances.py still uses the provider
+#     # onepassword_ssh_key_item: ${fn::onepassword:read: "op://dev-baile/oci/ssh_key_item_name"} # Example
+
+#     # Hetzner Configuration (Placeholder - requires pulumi-hcloud provider)
+#     # hcloud:token: ${onepassword.hetznerCreds.fields.api_token.value}
+
+#   # --- Environment Variables for Providers (Alternative/Standard Method) ---
+#   environmentVariables:
+#     # AWS Environment Variables (Standard)
+#     AWS_ACCESS_KEY_ID: ${onepassword.awsCreds.fields.access_key_id.value}
+#     AWS_SECRET_ACCESS_KEY: ${onepassword.awsCreds.fields.secret_access_key.value}
+#     AWS_REGION: ${pulumiConfig.aws:region} # Set region via env var too
+
+#     # Azure Environment Variables (Standard for Service Principal)
+#     ARM_CLIENT_ID: ${pulumiConfig.azure-native:clientId}
+#     ARM_CLIENT_SECRET: ${pulumiConfig.azure-native:clientSecret}
+#     ARM_TENANT_ID: ${pulumiConfig.azure-native:tenantId}
+#     ARM_SUBSCRIPTION_ID: ${pulumiConfig.azure-native:subscriptionId}
+#     ARM_LOCATION: ${pulumiConfig.azure-native:location} # Set location via env var too
+
+#     # GCP Environment Variables (Using Credentials File)
+#     # Pulumi ESC can create a temporary file with the JSON key
+#     GOOGLE_CREDENTIALS: ${onepassword.gcpCreds.fields.service_account_key_json.value}
+#     GOOGLE_PROJECT: ${pulumiConfig.gcp:project}
+#     GOOGLE_ZONE: ${pulumiConfig.gcp:zone}
+
+#     # Hetzner Environment Variables (Standard)
+#     # HCLOUD_TOKEN: ${pulumiConfig.hcloud:token} # If using hcloud provider
+
+# # Optional: Define secrets that should be encrypted in the Pulumi state
+# secrets:
+#   providers:
+#     - onepassword
+#   encrypt:
+#     # List specific config values to encrypt if needed, beyond automatic secret handling
+#     # - adminPassword # Already handled as secret by require_secret in Python if kept
+#     pass
+# ]]>

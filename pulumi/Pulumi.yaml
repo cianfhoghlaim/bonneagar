@@ -1,0 +1,10 @@
+name: multi-cloud-free-tier
+environment: 
+  - dev-baile/saor
+runtime: 
+  name: python
+  options:
+    toolchain: uv
+    virtualenv: .venv
+
+description: A Pulumi program to deploy free-tier instances on OCI, AWS, GCP, and Azure

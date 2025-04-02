@@ -17,7 +17,8 @@
         "pulumi.pulumi",
         "ms-azuretools.vscode-docker",
         "github.copilot",
-        "github.vscode-github-actions"
+        "github.vscode-github-actions",
+        "ms-toolsai.jupyter"
       ],
       "settings": {
           "python.defaultInterpreterPath": "/usr/local/bin/python",

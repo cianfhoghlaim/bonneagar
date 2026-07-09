@@ -18,10 +18,11 @@
 > (`stacks/lakehouse-oci/` + `stacks/r2/`); 7 reference-only
 > dirs without `compose.yaml` removed (ci, motherduck,
 > planetscale, pydantic-gateway, tools, olake, nimtable).
-> **Actual count: 86 stacks** (per `bun run validate-stacks`).
-> The 88-stacks figure is kept in this header for v4
-> compatibility but will be corrected to 86 in the next
-> docs sync (Phase 8).
+> **Actual count: 88 stacks** (post-v6: 5 placeholder dirs
+> `backend/`, `platform-service/`, `runner/`, `workers/`,
+> `x2text-service/` deleted by the
+> `2026-07-09-v6-drift-remediation-and-repo-boundary-lockdown-v1`
+> openspec change).
 
 ## Priority quick reference
 
@@ -156,3 +157,40 @@ resolves them at container runtime.
 - [cianfhoghlaim/leabharlann](https://github.com/cianfhoghlaim/leabharlann)
   — the digital library that also consumes parts of this
   mesh (e.g. the Gemma inference target via LiteLLM).
+
+## IaC Repo Boundary
+
+This repo owns the **IaC** layer of the Cianfhoghlaim
+constellation. The boundary is enforced by the
+`2026-07-09-v6-drift-remediation-and-repo-boundary-lockdown-v1`
+openspec change.
+
+### What lives here
+
+| Domain | Location |
+|:--|:--|
+| 88 Docker Compose stacks | `stacks/<name>/` |
+| IaC TypeScript client | `iac/` (15 CLI commands + 3 typed clients) |
+| Komodo fleet definitions | `komodo/` (resource-syncs + procedures + stacks + servers) |
+| Pangolin mesh config | `pangolin/` |
+| Deploy runbooks | `deploy-runbooks/` |
+| Pulumi cross-cloud IaC | `pulumi/` |
+| Ansible bootstrap | `ansible/` |
+| Audit scripts | `audit/` |
+| IaC CLI entry point | `iac/cli.ts` + `package.json` scripts (`iac:bootstrap`, `iac:plan`, `iac:health`, etc.) |
+
+### What does NOT live here
+
+- Application code (data platform, agent fleet, frontend apps) — that's `cianfhoghlaim/`
+- OpenSpec changes + specs — those live in the cianfhoghlaim repo's `openspec/` (even if they reference this repo's stacks)
+- The leabharlann corpus — that's `leabharlann/` (separate worktree)
+
+### Cross-repo sync convention
+
+When an openspec change touches both cianfhoghlaim + bonneagar,
+it MUST include a `cross-repo-sync.md` file at
+`openspec/changes/<id>/cross-repo-sync.md` that lists the commit
+plan + branch names + push targets for each repo. The 2 repos
+MUST be committed in this order: bonneagar first, then
+cianfhoghlaim (the IaC tests in bonneagar are a prerequisite
+for the cianfhoghlaim openspec archive).

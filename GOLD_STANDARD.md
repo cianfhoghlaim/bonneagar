@@ -7,7 +7,7 @@ checklist when adding a new stack, and the audit reference when running
 
 ## Why This Standard Exists
 
-The 94 stacks in this monorepo were built by multiple agents over
+The 88 stacks in this monorepo were built by multiple agents over
 ~2 years. Without a uniform pattern:
 
 - Komodo can't reliably sync them (different file layouts)
@@ -236,7 +236,7 @@ bun run validate-stacks
 ## Validation
 
 ```bash
-# Full audit (all 94 stacks)
+# Full audit (all 88 stacks)
 bun run validate-stacks
 
 # Single stack

@@ -104,7 +104,7 @@ docker compose logs -f
 # Tear down
 docker compose down
 
-# Validate all 94 stacks against the GOLD_STANDARD
+# Validate all 88 stacks against the GOLD_STANDARD
 bun run validate-stacks
 ```
 

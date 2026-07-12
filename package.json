@@ -15,6 +15,7 @@
     "iac:health": "bun run iac/cli.ts health",
     "iac:sync:secrets": "bun run iac/cli.ts sync:secrets",
     "iac:sync:resources": "bun run iac/cli.ts sync:resources",
+    "iac:sync:sites": "bun run iac/cli.ts sync:sites",
     "iac:sync:procedures": "bun run iac/cli.ts sync:procedures",
     "iac:sync:resource-syncs": "bun run iac/cli.ts sync:resource-syncs",
     "iac:sync:monitors": "bun run iac/cli.ts sync:monitors",
@@ -22,7 +23,9 @@
     "iac:sync:variables": "bun run iac/cli.ts sync:variables",
     "iac:sync:schedules": "bun run iac/cli.ts sync:schedules",
     "iac:sync:action-recipients": "bun run iac/cli.ts sync:action-recipients",
-    "iac:sync:olm": "bun run iac/cli.ts sync:olm"
+    "iac:sync:olm": "bun run iac/cli.ts sync:olm",
+    "iac:rotate-auth": "bun run iac/cli.ts rotate-auth",
+    "iac:bootstrap-pocketid-admin": "bun run iac/cli.ts bootstrap-pocketid-admin"
   },
   "devDependencies": {
     "@types/bun": "latest"
